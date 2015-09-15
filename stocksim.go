@@ -8,6 +8,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var listenOn = "localhost:8800"
+
 func indexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	p := "assets/index.html"
 	if _, err := os.Stat(p); err == nil {
@@ -20,5 +22,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 func main() {
 	router := httprouter.New()
 	router.GET("/", indexHandler)
-	log.Fatal(http.ListenAndServe("localhost:8800", router))
+	log.Printf("Listening on %q ...", listenOn)
+	log.Fatal(http.ListenAndServe(listenOn, router))
 }
